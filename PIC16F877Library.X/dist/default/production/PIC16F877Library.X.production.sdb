@@ -3,9 +3,9 @@
 [d edition pro ]
 [d chip 16F877 ]
 [d frameptr 6 ]
-"3 C:\Users\Carlos_Tonche\Documents\PIC16F877Library.X\application.c
+"4 C:\Users\Carlos_Tonche\Documents\PIC16F877Library.X\application.c
 [v _setup setup `(v  1 e 1 0 ]
-"8
+"9
 [v _loop loop `(v  1 e 1 0 ]
 "10 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c90\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
@@ -15,19 +15,288 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"5 C:\Users\Carlos_Tonche\Documents\PIC16F877Library.X\procedures.c
+"6 C:\Users\Carlos_Tonche\Documents\PIC16F877Library.X\procedures.c
 [v _main main `(i  1 e 2 0 ]
+"1315
+[v _preventiveWDTtoTMR0 preventiveWDTtoTMR0 `(v  1 e 1 0 ]
+"1402
+[v _ADPortConfiguration ADPortConfiguration `(v  1 e 1 0 ]
+[s S106 . 1 `uc 1 RA0 1 0 :1:0 
+`uc 1 RA1 1 0 :1:1 
+`uc 1 RA2 1 0 :1:2 
+`uc 1 RA3 1 0 :1:3 
+`uc 1 RA4 1 0 :1:4 
+`uc 1 RA5 1 0 :1:5 
+]
+"181 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic16f877.h
+[u S113 . 1 `S106 1 . 1 0 ]
+[v _PORTAbits PORTAbits `VES113  1 e 1 @5 ]
+[s S123 . 1 `uc 1 RB0 1 0 :1:0 
+`uc 1 RB1 1 0 :1:1 
+`uc 1 RB2 1 0 :1:2 
+`uc 1 RB3 1 0 :1:3 
+`uc 1 RB4 1 0 :1:4 
+`uc 1 RB5 1 0 :1:5 
+`uc 1 RB6 1 0 :1:6 
+`uc 1 RB7 1 0 :1:7 
+]
+"233
+[u S132 . 1 `S123 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES132  1 e 1 @6 ]
+[s S144 . 1 `uc 1 RC0 1 0 :1:0 
+`uc 1 RC1 1 0 :1:1 
+`uc 1 RC2 1 0 :1:2 
+`uc 1 RC3 1 0 :1:3 
+`uc 1 RC4 1 0 :1:4 
+`uc 1 RC5 1 0 :1:5 
+`uc 1 RC6 1 0 :1:6 
+`uc 1 RC7 1 0 :1:7 
+]
+"295
+[u S153 . 1 `S144 1 . 1 0 ]
+[v _PORTCbits PORTCbits `VES153  1 e 1 @7 ]
+[s S165 . 1 `uc 1 RD0 1 0 :1:0 
+`uc 1 RD1 1 0 :1:1 
+`uc 1 RD2 1 0 :1:2 
+`uc 1 RD3 1 0 :1:3 
+`uc 1 RD4 1 0 :1:4 
+`uc 1 RD5 1 0 :1:5 
+`uc 1 RD6 1 0 :1:6 
+`uc 1 RD7 1 0 :1:7 
+]
+"357
+[u S174 . 1 `S165 1 . 1 0 ]
+[v _PORTDbits PORTDbits `VES174  1 e 1 @8 ]
+[s S186 . 1 `uc 1 RE0 1 0 :1:0 
+`uc 1 RE1 1 0 :1:1 
+`uc 1 RE2 1 0 :1:2 
+]
+"414
+[u S190 . 1 `S186 1 . 1 0 ]
+[v _PORTEbits PORTEbits `VES190  1 e 1 @9 ]
+[s S410 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INTF 1 0 :1:1 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INTE 1 0 :1:4 
+`uc 1 T0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"477
+[s S419 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 TMR0IE 1 0 :1:5 
+]
+[u S424 . 1 `S410 1 . 1 0 `S419 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES424  1 e 1 @11 ]
+[s S463 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSPIF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 PSPIF 1 0 :1:7 
+]
+"549
+[u S472 . 1 `S463 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES472  1 e 1 @12 ]
+[s S497 . 1 `uc 1 CCP2IF 1 0 :1:0 
+`uc 1 . 1 0 :2:1 
+`uc 1 BCLIF 1 0 :1:3 
+`uc 1 EEIF 1 0 :1:4 
+]
+"607
+[u S502 . 1 `S497 1 . 1 0 ]
+[v _PIR2bits PIR2bits `VES502  1 e 1 @13 ]
+"634
+[v _TMR1L TMR1L `VEuc  1 e 1 @14 ]
+"641
+[v _TMR1H TMR1H `VEuc  1 e 1 @15 ]
+[s S227 . 1 `uc 1 TMR1ON 1 0 :1:0 
+`uc 1 TMR1CS 1 0 :1:1 
+`uc 1 nT1SYNC 1 0 :1:2 
+`uc 1 T1OSCEN 1 0 :1:3 
+`uc 1 T1CKPS 1 0 :2:4 
+]
+"675
+[s S233 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 T1CKPS0 1 0 :1:4 
+`uc 1 T1CKPS1 1 0 :1:5 
+]
+[s S237 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 T1INSYNC 1 0 :1:2 
+]
+[s S240 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 T1SYNC 1 0 :1:2 
+]
+[u S243 . 1 `S227 1 . 1 0 `S233 1 . 1 0 `S237 1 . 1 0 `S240 1 . 1 0 ]
+[v _T1CONbits T1CONbits `VES243  1 e 1 @16 ]
+"803
+[v _SSPBUF SSPBUF `VEuc  1 e 1 @19 ]
+[s S362 . 1 `uc 1 SSPM 1 0 :4:0 
+`uc 1 CKP 1 0 :1:4 
+`uc 1 SSPEN 1 0 :1:5 
+`uc 1 SSPOV 1 0 :1:6 
+`uc 1 WCOL 1 0 :1:7 
+]
+"830
+[s S368 . 1 `uc 1 SSPM0 1 0 :1:0 
+`uc 1 SSPM1 1 0 :1:1 
+`uc 1 SSPM2 1 0 :1:2 
+`uc 1 SSPM3 1 0 :1:3 
+]
+[u S373 . 1 `S362 1 . 1 0 `S368 1 . 1 0 ]
+[v _SSPCONbits SSPCONbits `VES373  1 e 1 @20 ]
+[s S201 . 1 `uc 1 PS 1 0 :3:0 
+`uc 1 PSA 1 0 :1:3 
+`uc 1 T0SE 1 0 :1:4 
+`uc 1 T0CS 1 0 :1:5 
+`uc 1 INTEDG 1 0 :1:6 
+`uc 1 nRBPU 1 0 :1:7 
+]
+"1270
+[s S208 . 1 `uc 1 PS0 1 0 :1:0 
+`uc 1 PS1 1 0 :1:1 
+`uc 1 PS2 1 0 :1:2 
+]
+[u S212 . 1 `S201 1 . 1 0 `S208 1 . 1 0 ]
+[v _OPTION_REGbits OPTION_REGbits `VES212  1 e 1 @129 ]
+[s S26 . 1 `uc 1 TRISA0 1 0 :1:0 
+`uc 1 TRISA1 1 0 :1:1 
+`uc 1 TRISA2 1 0 :1:2 
+`uc 1 TRISA3 1 0 :1:3 
+`uc 1 TRISA4 1 0 :1:4 
+`uc 1 TRISA5 1 0 :1:5 
+]
+"1335
+[u S33 . 1 `S26 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES33  1 e 1 @133 ]
+[s S43 . 1 `uc 1 TRISB0 1 0 :1:0 
+`uc 1 TRISB1 1 0 :1:1 
+`uc 1 TRISB2 1 0 :1:2 
+`uc 1 TRISB3 1 0 :1:3 
+`uc 1 TRISB4 1 0 :1:4 
+`uc 1 TRISB5 1 0 :1:5 
+`uc 1 TRISB6 1 0 :1:6 
+`uc 1 TRISB7 1 0 :1:7 
+]
+"1387
+[u S52 . 1 `S43 1 . 1 0 ]
+[v _TRISBbits TRISBbits `VES52  1 e 1 @134 ]
+[s S64 . 1 `uc 1 TRISC0 1 0 :1:0 
+`uc 1 TRISC1 1 0 :1:1 
+`uc 1 TRISC2 1 0 :1:2 
+`uc 1 TRISC3 1 0 :1:3 
+`uc 1 TRISC4 1 0 :1:4 
+`uc 1 TRISC5 1 0 :1:5 
+`uc 1 TRISC6 1 0 :1:6 
+`uc 1 TRISC7 1 0 :1:7 
+]
+"1449
+[u S73 . 1 `S64 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES73  1 e 1 @135 ]
+[s S85 . 1 `uc 1 TRISE0 1 0 :1:0 
+`uc 1 TRISE1 1 0 :1:1 
+`uc 1 TRISE2 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 PSPMODE 1 0 :1:4 
+`uc 1 IBOV 1 0 :1:5 
+`uc 1 OBF 1 0 :1:6 
+`uc 1 IBF 1 0 :1:7 
+]
+"1573
+[u S94 . 1 `S85 1 . 1 0 ]
+[v _TRISEbits TRISEbits `VES94  1 e 1 @137 ]
+[s S442 . 1 `uc 1 TMR1IE 1 0 :1:0 
+`uc 1 TMR2IE 1 0 :1:1 
+`uc 1 CCP1IE 1 0 :1:2 
+`uc 1 SSPIE 1 0 :1:3 
+`uc 1 TXIE 1 0 :1:4 
+`uc 1 RCIE 1 0 :1:5 
+`uc 1 ADIE 1 0 :1:6 
+`uc 1 PSPIE 1 0 :1:7 
+]
+"1630
+[u S451 . 1 `S442 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES451  1 e 1 @140 ]
+[s S484 . 1 `uc 1 CCP2IE 1 0 :1:0 
+`uc 1 . 1 0 :2:1 
+`uc 1 BCLIE 1 0 :1:3 
+`uc 1 EEIE 1 0 :1:4 
+]
+"1688
+[u S489 . 1 `S484 1 . 1 0 ]
+[v _PIE2bits PIE2bits `VES489  1 e 1 @141 ]
+[s S273 . 1 `uc 1 BF 1 0 :1:0 
+`uc 1 UA 1 0 :1:1 
+`uc 1 R_nW 1 0 :1:2 
+`uc 1 S 1 0 :1:3 
+`uc 1 P 1 0 :1:4 
+`uc 1 D_nA 1 0 :1:5 
+`uc 1 CKE 1 0 :1:6 
+`uc 1 SMP 1 0 :1:7 
+]
+"1872
+[s S282 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D 1 0 :1:5 
+]
+[s S287 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 I2C_READ 1 0 :1:2 
+`uc 1 I2C_START 1 0 :1:3 
+`uc 1 I2C_STOP 1 0 :1:4 
+`uc 1 I2C_DATA 1 0 :1:5 
+]
+[s S293 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nW 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nA 1 0 :1:5 
+]
+[s S298 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nWRITE 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nADDRESS 1 0 :1:5 
+]
+[s S303 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R_W 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D_A 1 0 :1:5 
+]
+[s S308 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 READ_WRITE 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 DATA_ADDRESS 1 0 :1:5 
+]
+[u S313 . 1 `S273 1 . 1 0 `S282 1 . 1 0 `S287 1 . 1 0 `S293 1 . 1 0 `S298 1 . 1 0 `S303 1 . 1 0 `S308 1 . 1 0 ]
+[v _SSPSTATbits SSPSTATbits `VES313  1 e 1 @148 ]
+[s S388 . 1 `uc 1 PCFG 1 0 :4:0 
+`uc 1 . 1 0 :3:4 
+`uc 1 ADFM 1 0 :1:7 
+]
+"2100
+[s S392 . 1 `uc 1 PCFG0 1 0 :1:0 
+`uc 1 PCFG1 1 0 :1:1 
+`uc 1 PCFG2 1 0 :1:2 
+`uc 1 PCFG3 1 0 :1:3 
+]
+[u S397 . 1 `S388 1 . 1 0 `S392 1 . 1 0 ]
+[v _ADCON1bits ADCON1bits `VES397  1 e 1 @159 ]
+"6 C:\Users\Carlos_Tonche\Documents\PIC16F877Library.X\procedures.c
 [v _main main `(i  1 e 2 0 ]
 {
-"13
+"14
 } 0
-"3 C:\Users\Carlos_Tonche\Documents\PIC16F877Library.X\application.c
+"4 C:\Users\Carlos_Tonche\Documents\PIC16F877Library.X\application.c
 [v _setup setup `(v  1 e 1 0 ]
 {
-"6
+"7
 } 0
-"8
+"9
 [v _loop loop `(v  1 e 1 0 ]
 {
-"11
+"12
 } 0

@@ -189,27 +189,27 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p x CPD = OFF ]
 "47
 [p x WRT = ON ]
-"3 application.c
-[; ;application.c: 3: void setup(void)
+"4 application.c
+[; ;application.c: 4: void setup(void)
 [v _setup `(v ~T0 @X0 1 ef ]
-"4
-[; ;application.c: 4: {
+"5
+[; ;application.c: 5: {
 {
 [e :U _setup ]
 [f ]
-"6
-[; ;application.c: 6: }
+"7
+[; ;application.c: 7: }
 [e :UE 90 ]
 }
-"8
-[; ;application.c: 8: void loop(void)
-[v _loop `(v ~T0 @X0 1 ef ]
 "9
-[; ;application.c: 9: {
+[; ;application.c: 9: void loop(void)
+[v _loop `(v ~T0 @X0 1 ef ]
+"10
+[; ;application.c: 10: {
 {
 [e :U _loop ]
 [f ]
-"11
-[; ;application.c: 11: }
+"12
+[; ;application.c: 12: }
 [e :UE 91 ]
 }
