@@ -7,6 +7,8 @@
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.00\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "application.c" 2
+# 1 "./system.h" 1
+# 34 "./system.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.00\\pic\\include\\xc.h" 1 3
 # 18 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.00\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -1619,10 +1621,13 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.00\\pic\\include\\xc.h" 2 3
-# 1 "application.c" 2
+# 34 "./system.h" 2
 
-# 1 "./system.h" 1
-# 40 "./system.h"
+
+
+
+
+
 #pragma config FOSC = HS
 #pragma config WDTE = OFF
 #pragma config PWRTE = OFF
@@ -1631,80 +1636,113 @@ extern __bank0 __bit __timeout;
 #pragma config LVP = OFF
 #pragma config CPD = OFF
 #pragma config WRT = ON
-# 84 "./system.h"
-void TxRxOcurredReset(void);
-void SSPInterruptEnable(void);
-void SSPInterruptDisable(void);
-void spiCLKpolarity(char polarity);
-int ADInterrupt(void);
-void ADInterruptReset(void);
-int usartRXint(void);
-int usartTXint(void);
-int SSPIFinterrupt(void);
-int CCP1IFInterrupt(void);
-void CCP1IFReset(void);
-int TMR2IFInterrupt(void);
-void TMR2FReset(void);
-int TMR1Interrupt(void);
-void TMR1IFReset(void);
-void EEPROMwriteIntEn(int mode);
-void BusCollisionEnable(int mode);
-void CCP2InterruptEnable(int mode);
-int EEPROMWriteFlag(void);
-int BusCollisionFlag(void);
-int CCP2Flag(void);
-void EEPROMFlagReset(void);
-void BusColisionReset(void);
-void CCP2FlagReset(void);
-void ExternalIntEnable(int mode);
-void ExternalIntEnable(int mode);
-void PortBChangeIntEnable(int mode);
-int TMR0Overflow(void);
-int ExternalInt(void);
-void ExternalIntReset(void);
-int PortBChangeInt(void);
-void TMR0IntReset(void);
-int TMR0Overflow(void);
-void PortBChangeIntEnable(int mode);
-void ExternalIntEnable(int mode);
-void timer0IntEnable(int mode);
-void PeripheralIntEnable(int mode);
-void GlobalInterruptEnable(int mode);
-int spiRead(void);
-void ADPortConfiguration(const int config);
-int spiBufferfull(void);
-void spiSlavebegin(void);
-void spiMasterbegin(void);
-void tmr1Prescaler(int rate);
-int timer1read(void);
-void timerCounter1start(void);
-void counter1begin(void);
-void timer1begin(void);
-void preventiveWDTtoTMR0(void);
-void timerCounter0Prescaler(const int rate);
-void timer0begin(void);
-void counter0begin(char edge);
-void digitalWrite(int pin, char port, char value);
+# 80 "./system.h"
+void configuracionInicial(void);
+void pinMode(char pin, char mode);
+void digitalWrite(char pin, char value);
+char digitalRead(char pin);
+unsigned int analogRead(char channel);
+void analogWrite(char pin, unsigned int value);
 void setup(void);
 void loop(void);
-void portaMode(int pin, char mode);
-void portbMode(int pin, char mode);
-void portcMode(int pin, char mode);
-void portdMode(int pin, char mode);
-void porteMode(int pin, char mode);
-int digitalRead(int pin, char port);
-void digitalWrite(int pin, char port, char value);
-void setup(void);
-void loop(void);
-# 2 "application.c" 2
 
+
+char SerialBegin(const long int baudrate);
+void SerialWrite(char data);
+char SerialEmpty(void);
+char SerialAvailable(void);
+void SerialWriteText(char *text);
+char SerialRead(void);
+void SerialReadText(char *Output, unsigned int length);
+
+int PWM_Max_Duty(void);
+void PWM1_Init(long fre);
+void PWM2_Init(long fre);
+void PWM1_Duty(unsigned int duty);
+void PWM2_Duty(unsigned int duty);
+void PWM1_Start(void);
+void PWM2_Start(void);
+void PWM2_Stop(void);
+
+char residuo(unsigned int numerator, unsigned int denominator);
+char cocienteEntero(unsigned int numerator, unsigned int denominator);
+
+
+void delay(const int milis);
+# 1 "application.c" 2
+
+
+
+char Operator;
+char Terminal;
+
+char buffer = 2;
+unsigned int ADC;
+char A0 = 0;
+char PWMTerminal = 4;
+char ADCMSB,ADCLSB;
+
+char vectorIn[3];
+char vectorOut[2];
+
+unsigned int PWM;
+char PWMMSB,PWMLSB;
 
 void setup(void)
 {
-
+    SerialBegin(9600);
+    pinMode(1,0);
 }
 
 void loop(void)
 {
+    if(SerialAvailable())
+    {
+        for(int i=0;i<buffer;i++)
+        {
+            vectorIn[i] = SerialRead();
+        }
+        PWMLSB = vectorIn[1];
+        PWMMSB = vectorIn[0];
+        PWM = PWMMSB;
+        PWM = PWM << 8;
+        PWM += PWMLSB;
+        analogWrite(1,PWM);
+        ADC = analogRead(0);
+        ADCMSB = cocienteEntero(ADC,256);
+        ADCLSB = residuo(ADC,256);
+        vectorOut[0] = ADCMSB;
+        vectorOut[1] = ADCLSB;
+        for(int i=0;i<buffer;i++)
+        {
+            SerialWrite(vectorOut[i]);
+        }
+        delay(100);
+    }
+    else
+    {
+        analogWrite(4,0);
+    }
+}
 
+char residuo(unsigned int numerator, unsigned int denominator)
+{
+ unsigned int temp1 = numerator;
+ while(temp1 > denominator)
+ {
+  temp1 -= denominator;
+ }
+ return temp1;
+}
+
+char cocienteEntero(unsigned int numerator, unsigned int denominator)
+{
+ unsigned int cont = 0;
+ unsigned int temp1 = numerator;
+ while (temp1 > denominator)
+ {
+  temp1 -= denominator;
+  cont++;
+ }
+ return cont;
 }

@@ -69,82 +69,46 @@
     <p><b>Remarks:</b></p>
  */
 // TODO Insert declarations or function prototypes (right here) to leverage 
-#define INPUT 'I'
-#define OUTPUT 'O'
-#define HIGH 'h'
-#define LOW 'l'
-#define PA 'A'
-#define PB 'B'
-#define PC 'C'
-#define PD 'D'
-#define PE 'E'
-#define FALLING 'f'
-#define RISING 'r'
+#define INPUT 1
+#define OUTPUT 0
+#define HIGH 1
+#define LOW 0
+#define _XTAL_FREQ 20000000
+#define TMR2PRESCALE 4
 
-void TxRxOcurredReset(void);
-void SSPInterruptEnable(void);
-void SSPInterruptDisable(void);
-void spiCLKpolarity(char polarity);
-int ADInterrupt(void);
-void ADInterruptReset(void);
-int usartRXint(void);
-int usartTXint(void);
-int SSPIFinterrupt(void);
-int CCP1IFInterrupt(void);
-void CCP1IFReset(void);
-int TMR2IFInterrupt(void);
-void TMR2FReset(void);
-int TMR1Interrupt(void);
-void TMR1IFReset(void);
-void EEPROMwriteIntEn(int mode);
-void BusCollisionEnable(int mode);
-void CCP2InterruptEnable(int mode);
-int EEPROMWriteFlag(void);
-int BusCollisionFlag(void);
-int CCP2Flag(void);
-void EEPROMFlagReset(void);
-void BusColisionReset(void);
-void CCP2FlagReset(void);
-void ExternalIntEnable(int mode);
-void ExternalIntEnable(int mode);
-void PortBChangeIntEnable(int mode);
-int TMR0Overflow(void);
-int ExternalInt(void);
-void ExternalIntReset(void);
-int PortBChangeInt(void);
-void TMR0IntReset(void);
-int TMR0Overflow(void);
-void PortBChangeIntEnable(int mode);
-void ExternalIntEnable(int mode);
-void timer0IntEnable(int mode);
-void PeripheralIntEnable(int mode);
-void GlobalInterruptEnable(int mode);
-int spiRead(void);
-void ADPortConfiguration(const int config);
-int spiBufferfull(void);
-void spiSlavebegin(void);
-void spiMasterbegin(void);
-void tmr1Prescaler(int rate);
-int timer1read(void);
-void timerCounter1start(void);
-void counter1begin(void);
-void timer1begin(void);
-void preventiveWDTtoTMR0(void);
-void timerCounter0Prescaler(const int rate);
-void timer0begin(void);
-void counter0begin(char edge);
-void digitalWrite(int pin, char port, char value);
+// System Configuration
+void configuracionInicial(void);
+void pinMode(char pin, char mode);
+void digitalWrite(char pin, char value);
+char digitalRead(char pin);
+unsigned int analogRead(char channel);
+void analogWrite(char pin, unsigned int value);
 void setup(void);
 void loop(void);
-void portaMode(int pin, char mode);
-void portbMode(int pin, char mode);
-void portcMode(int pin, char mode);
-void portdMode(int pin, char mode);
-void porteMode(int pin, char mode);
-int digitalRead(int pin, char port);
-void digitalWrite(int pin, char port, char value);
-void setup(void);
-void loop(void);
+
+//SerialModule
+char SerialBegin(const long int baudrate);
+void SerialWrite(char data);
+char SerialEmpty(void);
+char SerialAvailable(void);
+void SerialWriteText(char *text);
+char SerialRead(void);
+void SerialReadText(char *Output, unsigned int length);
+//PWM
+int PWM_Max_Duty(void);
+void PWM1_Init(long fre);
+void PWM2_Init(long fre);
+void PWM1_Duty(unsigned int duty);
+void PWM2_Duty(unsigned int duty);
+void PWM1_Start(void);
+void PWM2_Start(void);
+void PWM2_Stop(void);
+//Math 
+char residuo(unsigned int numerator, unsigned int denominator);
+char cocienteEntero(unsigned int numerator, unsigned int denominator);
+
+//time
+void delay(const int milis);
 // live documentation
 
 #ifdef	__cplusplus
