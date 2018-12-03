@@ -1584,398 +1584,395 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;procedures.c: 340:   unsigned int x;
 [v _x `ui ~T0 @X0 1 a ]
 "341
-[; ;procedures.c: 341:   x = (20000000 - baudrate*64)/(baudrate*64);
-[e = _x -> / - -> 20000000 `l * _baudrate -> -> 64 `i `l * _baudrate -> -> 64 `i `l `ui ]
-"342
-[; ;procedures.c: 342:   if(x>255)
-[e $ ! > _x -> -> 255 `i `ui 205  ]
+[; ;procedures.c: 341:   x = (20000000 / (64 * baudrate)) - 1;
+[e = _x -> - / -> 20000000 `l * -> -> 64 `i `l _baudrate -> -> 1 `i `l `ui ]
 "343
-[; ;procedures.c: 343:   {
-{
+[; ;procedures.c: 343:   if(x>255)
+[e $ ! > _x -> -> 255 `i `ui 205  ]
 "344
-[; ;procedures.c: 344:     x = (20000000 - baudrate*16)/(baudrate*16);
-[e = _x -> / - -> 20000000 `l * _baudrate -> -> 16 `i `l * _baudrate -> -> 16 `i `l `ui ]
+[; ;procedures.c: 344:   {
+{
 "345
-[; ;procedures.c: 345:     BRGH = 1;
-[e = _BRGH -> -> 1 `i `b ]
+[; ;procedures.c: 345:     x = (20000000 / (16 * baudrate)) - 1;
+[e = _x -> - / -> 20000000 `l * -> -> 16 `i `l _baudrate -> -> 1 `i `l `ui ]
 "346
-[; ;procedures.c: 346:   }
+[; ;procedures.c: 346:     BRGH = 1;
+[e = _BRGH -> -> 1 `i `b ]
+"347
+[; ;procedures.c: 347:   }
 }
 [e :U 205 ]
-"347
-[; ;procedures.c: 347:   if(x<256)
-[e $ ! < _x -> -> 256 `i `ui 206  ]
 "348
-[; ;procedures.c: 348:   {
-{
+[; ;procedures.c: 348:   if(x<256)
+[e $ ! < _x -> -> 256 `i `ui 206  ]
 "349
-[; ;procedures.c: 349:     SPBRG = x;
-[e = _SPBRG -> _x `uc ]
+[; ;procedures.c: 349:   {
+{
 "350
-[; ;procedures.c: 350:     SYNC = 0;
-[e = _SYNC -> -> 0 `i `b ]
+[; ;procedures.c: 350:     SPBRG = x;
+[e = _SPBRG -> _x `uc ]
 "351
-[; ;procedures.c: 351:     SPEN = 1;
-[e = _SPEN -> -> 1 `i `b ]
+[; ;procedures.c: 351:     SYNC = 0;
+[e = _SYNC -> -> 0 `i `b ]
 "352
-[; ;procedures.c: 352:     TRISC7 = 1;
-[e = _TRISC7 -> -> 1 `i `b ]
+[; ;procedures.c: 352:     SPEN = 1;
+[e = _SPEN -> -> 1 `i `b ]
 "353
-[; ;procedures.c: 353:     TRISC6 = 1;
-[e = _TRISC6 -> -> 1 `i `b ]
+[; ;procedures.c: 353:     TRISC7 = 1;
+[e = _TRISC7 -> -> 1 `i `b ]
 "354
-[; ;procedures.c: 354:     CREN = 1;
-[e = _CREN -> -> 1 `i `b ]
+[; ;procedures.c: 354:     TRISC6 = 1;
+[e = _TRISC6 -> -> 1 `i `b ]
 "355
-[; ;procedures.c: 355:     TXEN = 1;
-[e = _TXEN -> -> 1 `i `b ]
+[; ;procedures.c: 355:     CREN = 1;
+[e = _CREN -> -> 1 `i `b ]
 "356
-[; ;procedures.c: 356:     return 1;
+[; ;procedures.c: 356:     TXEN = 1;
+[e = _TXEN -> -> 1 `i `b ]
+"357
+[; ;procedures.c: 357:     return 1;
 [e ) -> -> 1 `i `uc ]
 [e $UE 204  ]
-"357
-[; ;procedures.c: 357:   }
+"358
+[; ;procedures.c: 358:   }
 }
 [e :U 206 ]
-"358
-[; ;procedures.c: 358:   return 0;
+"359
+[; ;procedures.c: 359:   return 0;
 [e ) -> -> 0 `i `uc ]
 [e $UE 204  ]
-"359
-[; ;procedures.c: 359: }
+"360
+[; ;procedures.c: 360: }
 [e :UE 204 ]
 }
-"360
-[; ;procedures.c: 360: void delay(const int milis)
-[v _delay `(v ~T0 @X0 1 ef1`Ci ]
 "361
-[; ;procedures.c: 361: {
+[; ;procedures.c: 361: void delay(const int milis)
+[v _delay `(v ~T0 @X0 1 ef1`Ci ]
+"362
+[; ;procedures.c: 362: {
 {
 [e :U _delay ]
-"360
-[; ;procedures.c: 360: void delay(const int milis)
-[v _milis `Ci ~T0 @X0 1 r1 ]
 "361
-[; ;procedures.c: 361: {
-[f ]
+[; ;procedures.c: 361: void delay(const int milis)
+[v _milis `Ci ~T0 @X0 1 r1 ]
 "362
-[; ;procedures.c: 362:     for(int j=0;j<milis;j++)
+[; ;procedures.c: 362: {
+[f ]
+"363
+[; ;procedures.c: 363:     for(int j=0;j<milis;j++)
 {
 [v _j `i ~T0 @X0 1 a ]
 [e = _j -> 0 `i ]
 [e $ < _j _milis 208  ]
 [e $U 209  ]
 [e :U 208 ]
-"363
-[; ;procedures.c: 363:     {
+"364
+[; ;procedures.c: 364:     {
 {
-"365
-[; ;procedures.c: 365:         for(int i=0;i<400;i++)
+"366
+[; ;procedures.c: 366:         for(int i=0;i<400;i++)
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
 [e $ < _i -> 400 `i 211  ]
 [e $U 212  ]
 [e :U 211 ]
-"366
-[; ;procedures.c: 366:         {
-{
 "367
-[; ;procedures.c: 367:             __asm("NOP");
-[; <" NOP ;# ">
+[; ;procedures.c: 367:         {
+{
 "368
-[; ;procedures.c: 368:         }
+[; ;procedures.c: 368:             __asm("NOP");
+[; <" NOP ;# ">
+"369
+[; ;procedures.c: 369:         }
 }
 [e ++ _i -> 1 `i ]
 [e $ < _i -> 400 `i 211  ]
 [e :U 212 ]
 }
-"369
-[; ;procedures.c: 369:     }
+"370
+[; ;procedures.c: 370:     }
 }
 [e ++ _j -> 1 `i ]
 [e $ < _j _milis 208  ]
 [e :U 209 ]
 }
-"370
-[; ;procedures.c: 370: }
+"371
+[; ;procedures.c: 371: }
 [e :UE 207 ]
 }
-"371
-[; ;procedures.c: 371: void SerialWrite(char data)
-[v _SerialWrite `(v ~T0 @X0 1 ef1`uc ]
 "372
-[; ;procedures.c: 372: {
+[; ;procedures.c: 372: void SerialWrite(char data)
+[v _SerialWrite `(v ~T0 @X0 1 ef1`uc ]
+"373
+[; ;procedures.c: 373: {
 {
 [e :U _SerialWrite ]
-"371
-[; ;procedures.c: 371: void SerialWrite(char data)
-[v _data `uc ~T0 @X0 1 r1 ]
 "372
-[; ;procedures.c: 372: {
-[f ]
+[; ;procedures.c: 372: void SerialWrite(char data)
+[v _data `uc ~T0 @X0 1 r1 ]
 "373
-[; ;procedures.c: 373:   while(!TRMT);
+[; ;procedures.c: 373: {
+[f ]
+"374
+[; ;procedures.c: 374:   while(!TRMT);
 [e $U 215  ]
 [e :U 216 ]
 [e :U 215 ]
 [e $ ! _TRMT 216  ]
 [e :U 217 ]
-"374
-[; ;procedures.c: 374:   TXREG = data;
-[e = _TXREG -> _data `uc ]
 "375
-[; ;procedures.c: 375: }
+[; ;procedures.c: 375:   TXREG = data;
+[e = _TXREG -> _data `uc ]
+"376
+[; ;procedures.c: 376: }
 [e :UE 214 ]
 }
-"376
-[; ;procedures.c: 376: char SerialEmpty(void)
-[v _SerialEmpty `(uc ~T0 @X0 1 ef ]
 "377
-[; ;procedures.c: 377: {
+[; ;procedures.c: 377: char SerialEmpty(void)
+[v _SerialEmpty `(uc ~T0 @X0 1 ef ]
+"378
+[; ;procedures.c: 378: {
 {
 [e :U _SerialEmpty ]
 [f ]
-"378
-[; ;procedures.c: 378:   return TRMT;
+"379
+[; ;procedures.c: 379:   return TRMT;
 [e ) -> _TRMT `uc ]
 [e $UE 218  ]
-"379
-[; ;procedures.c: 379: }
+"380
+[; ;procedures.c: 380: }
 [e :UE 218 ]
 }
-"380
-[; ;procedures.c: 380: char SerialAvailable(void)
-[v _SerialAvailable `(uc ~T0 @X0 1 ef ]
 "381
-[; ;procedures.c: 381: {
+[; ;procedures.c: 381: char SerialAvailable(void)
+[v _SerialAvailable `(uc ~T0 @X0 1 ef ]
+"382
+[; ;procedures.c: 382: {
 {
 [e :U _SerialAvailable ]
 [f ]
-"382
-[; ;procedures.c: 382:   return RCIF;
+"383
+[; ;procedures.c: 383:   return RCIF;
 [e ) -> _RCIF `uc ]
 [e $UE 219  ]
-"383
-[; ;procedures.c: 383: }
+"384
+[; ;procedures.c: 384: }
 [e :UE 219 ]
 }
-"384
-[; ;procedures.c: 384: void SerialWriteText(char *text)
-[v _SerialWriteText `(v ~T0 @X0 1 ef1`*uc ]
 "385
-[; ;procedures.c: 385: {
+[; ;procedures.c: 385: void SerialWriteText(char *text)
+[v _SerialWriteText `(v ~T0 @X0 1 ef1`*uc ]
+"386
+[; ;procedures.c: 386: {
 {
 [e :U _SerialWriteText ]
-"384
-[; ;procedures.c: 384: void SerialWriteText(char *text)
-[v _text `*uc ~T0 @X0 1 r1 ]
 "385
-[; ;procedures.c: 385: {
-[f ]
+[; ;procedures.c: 385: void SerialWriteText(char *text)
+[v _text `*uc ~T0 @X0 1 r1 ]
 "386
-[; ;procedures.c: 386:   int i;
-[v _i `i ~T0 @X0 1 a ]
+[; ;procedures.c: 386: {
+[f ]
 "387
-[; ;procedures.c: 387:   for(i=0;text[i]!='\0';i++)
+[; ;procedures.c: 387:   int i;
+[v _i `i ~T0 @X0 1 a ]
+"388
+[; ;procedures.c: 388:   for(i=0;text[i]!='\0';i++)
 {
 [e = _i -> 0 `i ]
 [e $U 224  ]
 [e :U 221 ]
-"388
-[; ;procedures.c: 388:     SerialWrite(text[i]);
+"389
+[; ;procedures.c: 389:     SerialWrite(text[i]);
 [e ( _SerialWrite (1 *U + _text * -> _i `x -> -> # *U _text `i `x ]
 [e ++ _i -> 1 `i ]
 [e :U 224 ]
 [e $ != -> *U + _text * -> _i `x -> -> # *U _text `i `x `ui -> 0 `ui 221  ]
 [e :U 222 ]
 }
-"389
-[; ;procedures.c: 389: }
+"390
+[; ;procedures.c: 390: }
 [e :UE 220 ]
 }
-"390
-[; ;procedures.c: 390: char SerialRead(void)
-[v _SerialRead `(uc ~T0 @X0 1 ef ]
 "391
-[; ;procedures.c: 391: {
+[; ;procedures.c: 391: char SerialRead(void)
+[v _SerialRead `(uc ~T0 @X0 1 ef ]
+"392
+[; ;procedures.c: 392: {
 {
 [e :U _SerialRead ]
 [f ]
-"392
-[; ;procedures.c: 392:   while(!RCIF);
+"393
+[; ;procedures.c: 393:   while(!RCIF);
 [e $U 226  ]
 [e :U 227 ]
 [e :U 226 ]
 [e $ ! _RCIF 227  ]
 [e :U 228 ]
-"393
-[; ;procedures.c: 393:   return RCREG;
+"394
+[; ;procedures.c: 394:   return RCREG;
 [e ) -> _RCREG `uc ]
 [e $UE 225  ]
-"394
-[; ;procedures.c: 394: }
+"395
+[; ;procedures.c: 395: }
 [e :UE 225 ]
 }
-"395
-[; ;procedures.c: 395: void SerialReadText(char *Output, unsigned int length)
-[v _SerialReadText `(v ~T0 @X0 1 ef2`*uc`ui ]
 "396
-[; ;procedures.c: 396: {
+[; ;procedures.c: 396: void SerialReadText(char *Output, unsigned int length)
+[v _SerialReadText `(v ~T0 @X0 1 ef2`*uc`ui ]
+"397
+[; ;procedures.c: 397: {
 {
 [e :U _SerialReadText ]
-"395
-[; ;procedures.c: 395: void SerialReadText(char *Output, unsigned int length)
+"396
+[; ;procedures.c: 396: void SerialReadText(char *Output, unsigned int length)
 [v _Output `*uc ~T0 @X0 1 r1 ]
 [v _length `ui ~T0 @X0 1 r2 ]
-"396
-[; ;procedures.c: 396: {
-[f ]
 "397
-[; ;procedures.c: 397:   unsigned int i;
-[v _i `ui ~T0 @X0 1 a ]
+[; ;procedures.c: 397: {
+[f ]
 "398
-[; ;procedures.c: 398:   for(int i=0;i<length;i++)
+[; ;procedures.c: 398:   unsigned int i;
+[v _i `ui ~T0 @X0 1 a ]
+"399
+[; ;procedures.c: 399:   for(int i=0;i<length;i++)
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
 [e $U 233  ]
 [e :U 230 ]
-"399
-[; ;procedures.c: 399:   Output[i] = SerialRead();
+"400
+[; ;procedures.c: 400:   Output[i] = SerialRead();
 [e = *U + _Output * -> _i `x -> -> # *U _Output `i `x ( _SerialRead ..  ]
 [e ++ _i -> 1 `i ]
 [e :U 233 ]
 [e $ < -> _i `ui _length 230  ]
 [e :U 231 ]
 }
-"400
-[; ;procedures.c: 400: }
+"401
+[; ;procedures.c: 401: }
 [e :UE 229 ]
 }
-"401
-[; ;procedures.c: 401: int PWM_Max_Duty(void)
-[v _PWM_Max_Duty `(i ~T0 @X0 1 ef ]
 "402
-[; ;procedures.c: 402: {
+[; ;procedures.c: 402: int PWM_Max_Duty(void)
+[v _PWM_Max_Duty `(i ~T0 @X0 1 ef ]
+"403
+[; ;procedures.c: 403: {
 {
 [e :U _PWM_Max_Duty ]
 [f ]
-"403
-[; ;procedures.c: 403:   return 20000000/(freq*4);
+"404
+[; ;procedures.c: 404:   return 20000000/(freq*4);
 [e ) -> / -> 20000000 `l * _freq -> -> 4 `i `l `i ]
 [e $UE 234  ]
-"404
-[; ;procedures.c: 404: }
+"405
+[; ;procedures.c: 405: }
 [e :UE 234 ]
 }
-"406
-[; ;procedures.c: 406: void PWM1_Init(long fre)
-[v _PWM1_Init `(v ~T0 @X0 1 ef1`l ]
 "407
-[; ;procedures.c: 407: {
+[; ;procedures.c: 407: void PWM1_Init(long fre)
+[v _PWM1_Init `(v ~T0 @X0 1 ef1`l ]
+"408
+[; ;procedures.c: 408: {
 {
 [e :U _PWM1_Init ]
-"406
-[; ;procedures.c: 406: void PWM1_Init(long fre)
-[v _fre `l ~T0 @X0 1 r1 ]
 "407
-[; ;procedures.c: 407: {
-[f ]
+[; ;procedures.c: 407: void PWM1_Init(long fre)
+[v _fre `l ~T0 @X0 1 r1 ]
 "408
-[; ;procedures.c: 408:   PR2 = (20000000/(fre*4*4)) - 1;
-[e = _PR2 -> - / -> 20000000 `l * * _fre -> -> 4 `i `l -> -> 4 `i `l -> -> 1 `i `l `uc ]
+[; ;procedures.c: 408: {
+[f ]
 "409
-[; ;procedures.c: 409:   freq = fre;
-[e = _freq _fre ]
+[; ;procedures.c: 409:   PR2 = (20000000/(fre*4*4)) - 1;
+[e = _PR2 -> - / -> 20000000 `l * * _fre -> -> 4 `i `l -> -> 4 `i `l -> -> 1 `i `l `uc ]
 "410
-[; ;procedures.c: 410: }
+[; ;procedures.c: 410:   freq = fre;
+[e = _freq _fre ]
+"411
+[; ;procedures.c: 411: }
 [e :UE 235 ]
 }
-"412
-[; ;procedures.c: 412: void PWM2_Init(long fre)
-[v _PWM2_Init `(v ~T0 @X0 1 ef1`l ]
 "413
-[; ;procedures.c: 413: {
+[; ;procedures.c: 413: void PWM2_Init(long fre)
+[v _PWM2_Init `(v ~T0 @X0 1 ef1`l ]
+"414
+[; ;procedures.c: 414: {
 {
 [e :U _PWM2_Init ]
-"412
-[; ;procedures.c: 412: void PWM2_Init(long fre)
-[v _fre `l ~T0 @X0 1 r1 ]
 "413
-[; ;procedures.c: 413: {
-[f ]
+[; ;procedures.c: 413: void PWM2_Init(long fre)
+[v _fre `l ~T0 @X0 1 r1 ]
 "414
-[; ;procedures.c: 414:   PR2 = (20000000/(fre*4*4)) - 1;
-[e = _PR2 -> - / -> 20000000 `l * * _fre -> -> 4 `i `l -> -> 4 `i `l -> -> 1 `i `l `uc ]
+[; ;procedures.c: 414: {
+[f ]
 "415
-[; ;procedures.c: 415:   freq = fre;
-[e = _freq _fre ]
+[; ;procedures.c: 415:   PR2 = (20000000/(fre*4*4)) - 1;
+[e = _PR2 -> - / -> 20000000 `l * * _fre -> -> 4 `i `l -> -> 4 `i `l -> -> 1 `i `l `uc ]
 "416
-[; ;procedures.c: 416: }
+[; ;procedures.c: 416:   freq = fre;
+[e = _freq _fre ]
+"417
+[; ;procedures.c: 417: }
 [e :UE 236 ]
 }
-"418
-[; ;procedures.c: 418: void PWM1_Duty(unsigned int duty)
-[v _PWM1_Duty `(v ~T0 @X0 1 ef1`ui ]
 "419
-[; ;procedures.c: 419: {
+[; ;procedures.c: 419: void PWM1_Duty(unsigned int duty)
+[v _PWM1_Duty `(v ~T0 @X0 1 ef1`ui ]
+"420
+[; ;procedures.c: 420: {
 {
 [e :U _PWM1_Duty ]
-"418
-[; ;procedures.c: 418: void PWM1_Duty(unsigned int duty)
-[v _duty `ui ~T0 @X0 1 r1 ]
 "419
-[; ;procedures.c: 419: {
-[f ]
+[; ;procedures.c: 419: void PWM1_Duty(unsigned int duty)
+[v _duty `ui ~T0 @X0 1 r1 ]
 "420
-[; ;procedures.c: 420:   if(duty<1024)
-[e $ ! < _duty -> -> 1024 `i `ui 238  ]
+[; ;procedures.c: 420: {
+[f ]
 "421
-[; ;procedures.c: 421:   {
-{
+[; ;procedures.c: 421:   if(duty<1024)
+[e $ ! < _duty -> -> 1024 `i `ui 238  ]
 "422
-[; ;procedures.c: 422:     duty = ((float)duty/1023)*PWM_Max_Duty();
-[e = _duty -> * / -> _duty `f -> -> 1023 `i `f -> ( _PWM_Max_Duty ..  `f `ui ]
+[; ;procedures.c: 422:   {
+{
 "423
-[; ;procedures.c: 423:     CCP1X = duty & 2;
-[e = _CCP1X -> & _duty -> -> 2 `i `ui `b ]
+[; ;procedures.c: 423:     duty = ((float)duty/1023)*PWM_Max_Duty();
+[e = _duty -> * / -> _duty `f -> -> 1023 `i `f -> ( _PWM_Max_Duty ..  `f `ui ]
 "424
-[; ;procedures.c: 424:     CCP1Y = duty & 1;
-[e = _CCP1Y -> & _duty -> -> 1 `i `ui `b ]
+[; ;procedures.c: 424:     CCP1X = duty & 2;
+[e = _CCP1X -> & _duty -> -> 2 `i `ui `b ]
 "425
-[; ;procedures.c: 425:     CCPR1L = duty>>2;
-[e = _CCPR1L -> >> _duty -> 2 `i `uc ]
+[; ;procedures.c: 425:     CCP1Y = duty & 1;
+[e = _CCP1Y -> & _duty -> -> 1 `i `ui `b ]
 "426
-[; ;procedures.c: 426:   }
+[; ;procedures.c: 426:     CCPR1L = duty>>2;
+[e = _CCPR1L -> >> _duty -> 2 `i `uc ]
+"427
+[; ;procedures.c: 427:   }
 }
 [e :U 238 ]
-"427
-[; ;procedures.c: 427: }
+"428
+[; ;procedures.c: 428: }
 [e :UE 237 ]
 }
-"429
-[; ;procedures.c: 429: void PWM2_Duty(unsigned int duty)
-[v _PWM2_Duty `(v ~T0 @X0 1 ef1`ui ]
 "430
-[; ;procedures.c: 430: {
+[; ;procedures.c: 430: void PWM2_Duty(unsigned int duty)
+[v _PWM2_Duty `(v ~T0 @X0 1 ef1`ui ]
+"431
+[; ;procedures.c: 431: {
 {
 [e :U _PWM2_Duty ]
-"429
-[; ;procedures.c: 429: void PWM2_Duty(unsigned int duty)
-[v _duty `ui ~T0 @X0 1 r1 ]
 "430
-[; ;procedures.c: 430: {
-[f ]
+[; ;procedures.c: 430: void PWM2_Duty(unsigned int duty)
+[v _duty `ui ~T0 @X0 1 r1 ]
 "431
-[; ;procedures.c: 431:   if(duty<1024)
-[e $ ! < _duty -> -> 1024 `i `ui 240  ]
+[; ;procedures.c: 431: {
+[f ]
 "432
-[; ;procedures.c: 432:   {
-{
+[; ;procedures.c: 432:   if(duty<1024)
+[e $ ! < _duty -> -> 1024 `i `ui 240  ]
 "433
-[; ;procedures.c: 433:     duty = ((float)duty/1023)*PWM_Max_Duty();
-[e = _duty -> * / -> _duty `f -> -> 1023 `i `f -> ( _PWM_Max_Duty ..  `f `ui ]
+[; ;procedures.c: 433:   {
+{
 "434
 [; ;procedures.c: 434:     CCP2X = duty & 2;
 [e = _CCP2X -> & _duty -> -> 2 `i `ui `b ]

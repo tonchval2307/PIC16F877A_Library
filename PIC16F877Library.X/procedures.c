@@ -338,10 +338,11 @@ void analogWrite(char pin, unsigned int value)
 char SerialBegin(const long int baudrate)
 {
   unsigned int x;
-  x = (_XTAL_FREQ - baudrate*64)/(baudrate*64);   //SPBRG for Low Baud Rate
+  x =  (_XTAL_FREQ / (64 * baudrate)) - 1;
+  //x = (_XTAL_FREQ - baudrate*64)/(baudrate*64);   //SPBRG for Low Baud Rate
   if(x>255)                                       //If High Baud Rage Required
   {
-    x = (_XTAL_FREQ - baudrate*16)/(baudrate*16); //SPBRG for High Baud Rate
+    x = (_XTAL_FREQ / (16 * baudrate)) - 1;//SPBRG for High Baud Rate
     BRGH = 1;                                     //Setting High Baud Rate
   }
   if(x<256)
@@ -430,7 +431,6 @@ void PWM2_Duty(unsigned int duty)
 {
   if(duty<1024)
   {
-    duty = ((float)duty/1023)*PWM_Max_Duty();
     CCP2X = duty & 2;
     CCP2Y = duty & 1;
     CCPR2L = duty>>2;

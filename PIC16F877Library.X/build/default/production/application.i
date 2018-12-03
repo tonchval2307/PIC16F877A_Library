@@ -1698,17 +1698,7 @@ void loop(void)
 {
     if(SerialAvailable())
     {
-        for(int i=0;i<buffer;i++)
-        {
-            vectorIn[i] = SerialRead();
-        }
-        PWMLSB = vectorIn[1];
-        PWMMSB = vectorIn[0];
-        PWM = PWMMSB;
-        PWM = PWM << 8;
-        PWM += PWMLSB;
-        analogWrite(1,PWM);
-        ADC = analogRead(0);
+        ADC = analogRead(1);
         ADCMSB = cocienteEntero(ADC,256);
         ADCLSB = residuo(ADC,256);
         vectorOut[0] = ADCMSB;
@@ -1717,11 +1707,8 @@ void loop(void)
         {
             SerialWrite(vectorOut[i]);
         }
-        delay(100);
-    }
-    else
-    {
-        analogWrite(4,0);
+        delay(200);
+# 60 "application.c"
     }
 }
 

@@ -2004,10 +2004,11 @@ void analogWrite(char pin, unsigned int value)
 char SerialBegin(const long int baudrate)
 {
   unsigned int x;
-  x = (20000000 - baudrate*64)/(baudrate*64);
+  x = (20000000 / (64 * baudrate)) - 1;
+
   if(x>255)
   {
-    x = (20000000 - baudrate*16)/(baudrate*16);
+    x = (20000000 / (16 * baudrate)) - 1;
     BRGH = 1;
   }
   if(x<256)
@@ -2096,7 +2097,6 @@ void PWM2_Duty(unsigned int duty)
 {
   if(duty<1024)
   {
-    duty = ((float)duty/1023)*PWM_Max_Duty();
     CCP2X = duty & 2;
     CCP2Y = duty & 1;
     CCPR2L = duty>>2;

@@ -8,12 +8,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "93
 [; ;./system.h: 93: char SerialAvailable(void);
 [v _SerialAvailable `(uc ~T0 @X0 0 ef ]
-"95
-[; ;./system.h: 95: char SerialRead(void);
-[v _SerialRead `(uc ~T0 @X0 0 ef ]
-"85
-[; ;./system.h: 85: void analogWrite(char pin, unsigned int value);
-[v _analogWrite `(v ~T0 @X0 0 ef2`uc`ui ]
 "84
 [; ;./system.h: 84: unsigned int analogRead(char channel);
 [v _analogRead `(ui ~T0 @X0 0 ef1`uc ]
@@ -296,196 +290,144 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;application.c: 28:     {
 {
 "29
-[; ;application.c: 29:         for(int i=0;i<buffer;i++)
+[; ;application.c: 29:         ADC = analogRead(1);
+[e = _ADC ( _analogRead (1 -> -> 1 `i `uc ]
+"30
+[; ;application.c: 30:         ADCMSB = cocienteEntero(ADC,256);
+[e = _ADCMSB ( _cocienteEntero (2 , _ADC -> -> 256 `i `ui ]
+"31
+[; ;application.c: 31:         ADCLSB = residuo(ADC,256);
+[e = _ADCLSB ( _residuo (2 , _ADC -> -> 256 `i `ui ]
+"32
+[; ;application.c: 32:         vectorOut[0] = ADCMSB;
+[e = *U + &U _vectorOut * -> -> -> 0 `i `ui `ux -> -> # *U &U _vectorOut `ui `ux _ADCMSB ]
+"33
+[; ;application.c: 33:         vectorOut[1] = ADCLSB;
+[e = *U + &U _vectorOut * -> -> -> 1 `i `ui `ux -> -> # *U &U _vectorOut `ui `ux _ADCLSB ]
+"34
+[; ;application.c: 34:         for(int i=0;i<buffer;i++)
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
 [e $U 96  ]
 [e :U 93 ]
-"30
-[; ;application.c: 30:         {
+"35
+[; ;application.c: 35:         {
 {
-"31
-[; ;application.c: 31:             vectorIn[i] = SerialRead();
-[e = *U + &U _vectorIn * -> -> _i `ui `ux -> -> # *U &U _vectorIn `ui `ux ( _SerialRead ..  ]
-"32
-[; ;application.c: 32:         }
+"36
+[; ;application.c: 36:             SerialWrite(vectorOut[i]);
+[e ( _SerialWrite (1 *U + &U _vectorOut * -> -> _i `ui `ux -> -> # *U &U _vectorOut `ui `ux ]
+"37
+[; ;application.c: 37:         }
 }
 [e ++ _i -> 1 `i ]
 [e :U 96 ]
 [e $ < _i -> _buffer `i 93  ]
 [e :U 94 ]
 }
-"33
-[; ;application.c: 33:         PWMLSB = vectorIn[1];
-[e = _PWMLSB *U + &U _vectorIn * -> -> -> 1 `i `ui `ux -> -> # *U &U _vectorIn `ui `ux ]
-"34
-[; ;application.c: 34:         PWMMSB = vectorIn[0];
-[e = _PWMMSB *U + &U _vectorIn * -> -> -> 0 `i `ui `ux -> -> # *U &U _vectorIn `ui `ux ]
-"35
-[; ;application.c: 35:         PWM = PWMMSB;
-[e = _PWM -> _PWMMSB `ui ]
-"36
-[; ;application.c: 36:         PWM = PWM << 8;
-[e = _PWM << _PWM -> 8 `i ]
-"37
-[; ;application.c: 37:         PWM += PWMLSB;
-[e =+ _PWM -> _PWMLSB `ui ]
 "38
-[; ;application.c: 38:         analogWrite(1,PWM);
-[e ( _analogWrite (2 , -> -> 1 `i `uc _PWM ]
-"39
-[; ;application.c: 39:         ADC = analogRead(0);
-[e = _ADC ( _analogRead (1 -> -> 0 `i `uc ]
-"40
-[; ;application.c: 40:         ADCMSB = cocienteEntero(ADC,256);
-[e = _ADCMSB ( _cocienteEntero (2 , _ADC -> -> 256 `i `ui ]
-"41
-[; ;application.c: 41:         ADCLSB = residuo(ADC,256);
-[e = _ADCLSB ( _residuo (2 , _ADC -> -> 256 `i `ui ]
-"42
-[; ;application.c: 42:         vectorOut[0] = ADCMSB;
-[e = *U + &U _vectorOut * -> -> -> 0 `i `ui `ux -> -> # *U &U _vectorOut `ui `ux _ADCMSB ]
-"43
-[; ;application.c: 43:         vectorOut[1] = ADCLSB;
-[e = *U + &U _vectorOut * -> -> -> 1 `i `ui `ux -> -> # *U &U _vectorOut `ui `ux _ADCLSB ]
-"44
-[; ;application.c: 44:         for(int i=0;i<buffer;i++)
-{
-[v _i `i ~T0 @X0 1 a ]
-[e = _i -> 0 `i ]
-[e $U 100  ]
-[e :U 97 ]
-"45
-[; ;application.c: 45:         {
-{
-"46
-[; ;application.c: 46:             SerialWrite(vectorOut[i]);
-[e ( _SerialWrite (1 *U + &U _vectorOut * -> -> _i `ui `ux -> -> # *U &U _vectorOut `ui `ux ]
-"47
-[; ;application.c: 47:         }
+[; ;application.c: 38:         delay(200);
+[e ( _delay (1 -> 200 `i ]
+"60
+[; ;application.c: 60:     }
 }
-[e ++ _i -> 1 `i ]
-[e :U 100 ]
-[e $ < _i -> _buffer `i 97  ]
-[e :U 98 ]
-}
-"48
-[; ;application.c: 48:         delay(100);
-[e ( _delay (1 -> 100 `i ]
-"49
-[; ;application.c: 49:     }
-}
-[e $U 101  ]
-"50
-[; ;application.c: 50:     else
 [e :U 92 ]
-"51
-[; ;application.c: 51:     {
-{
-"52
-[; ;application.c: 52:         analogWrite(4,0);
-[e ( _analogWrite (2 , -> -> 4 `i `uc -> -> 0 `i `ui ]
-"53
-[; ;application.c: 53:     }
-}
-[e :U 101 ]
-"54
-[; ;application.c: 54: }
+"61
+[; ;application.c: 61: }
 [e :UE 91 ]
 }
-"56
-[; ;application.c: 56: char residuo(unsigned int numerator, unsigned int denominator)
+"63
+[; ;application.c: 63: char residuo(unsigned int numerator, unsigned int denominator)
 [v _residuo `(uc ~T0 @X0 1 ef2`ui`ui ]
-"57
-[; ;application.c: 57: {
+"64
+[; ;application.c: 64: {
 {
 [e :U _residuo ]
-"56
-[; ;application.c: 56: char residuo(unsigned int numerator, unsigned int denominator)
+"63
+[; ;application.c: 63: char residuo(unsigned int numerator, unsigned int denominator)
 [v _numerator `ui ~T0 @X0 1 r1 ]
 [v _denominator `ui ~T0 @X0 1 r2 ]
-"57
-[; ;application.c: 57: {
+"64
+[; ;application.c: 64: {
 [f ]
-"58
-[; ;application.c: 58:  unsigned int temp1 = numerator;
+"65
+[; ;application.c: 65:  unsigned int temp1 = numerator;
 [v _temp1 `ui ~T0 @X0 1 a ]
 [e = _temp1 _numerator ]
-"59
-[; ;application.c: 59:  while(temp1 > denominator)
-[e $U 103  ]
-[e :U 104 ]
-"60
-[; ;application.c: 60:  {
-{
-"61
-[; ;application.c: 61:   temp1 -= denominator;
-[e =- _temp1 _denominator ]
-"62
-[; ;application.c: 62:  }
-}
-[e :U 103 ]
-"59
-[; ;application.c: 59:  while(temp1 > denominator)
-[e $ > _temp1 _denominator 104  ]
-[e :U 105 ]
-"63
-[; ;application.c: 63:  return temp1;
-[e ) -> _temp1 `uc ]
-[e $UE 102  ]
-"64
-[; ;application.c: 64: }
-[e :UE 102 ]
-}
 "66
-[; ;application.c: 66: char cocienteEntero(unsigned int numerator, unsigned int denominator)
-[v _cocienteEntero `(uc ~T0 @X0 1 ef2`ui`ui ]
+[; ;application.c: 66:  while(temp1 > denominator)
+[e $U 98  ]
+[e :U 99 ]
 "67
-[; ;application.c: 67: {
+[; ;application.c: 67:  {
+{
+"68
+[; ;application.c: 68:   temp1 -= denominator;
+[e =- _temp1 _denominator ]
+"69
+[; ;application.c: 69:  }
+}
+[e :U 98 ]
+"66
+[; ;application.c: 66:  while(temp1 > denominator)
+[e $ > _temp1 _denominator 99  ]
+[e :U 100 ]
+"70
+[; ;application.c: 70:  return temp1;
+[e ) -> _temp1 `uc ]
+[e $UE 97  ]
+"71
+[; ;application.c: 71: }
+[e :UE 97 ]
+}
+"73
+[; ;application.c: 73: char cocienteEntero(unsigned int numerator, unsigned int denominator)
+[v _cocienteEntero `(uc ~T0 @X0 1 ef2`ui`ui ]
+"74
+[; ;application.c: 74: {
 {
 [e :U _cocienteEntero ]
-"66
-[; ;application.c: 66: char cocienteEntero(unsigned int numerator, unsigned int denominator)
+"73
+[; ;application.c: 73: char cocienteEntero(unsigned int numerator, unsigned int denominator)
 [v _numerator `ui ~T0 @X0 1 r1 ]
 [v _denominator `ui ~T0 @X0 1 r2 ]
-"67
-[; ;application.c: 67: {
+"74
+[; ;application.c: 74: {
 [f ]
-"68
-[; ;application.c: 68:  unsigned int cont = 0;
+"75
+[; ;application.c: 75:  unsigned int cont = 0;
 [v _cont `ui ~T0 @X0 1 a ]
 [e = _cont -> -> 0 `i `ui ]
-"69
-[; ;application.c: 69:  unsigned int temp1 = numerator;
+"76
+[; ;application.c: 76:  unsigned int temp1 = numerator;
 [v _temp1 `ui ~T0 @X0 1 a ]
 [e = _temp1 _numerator ]
-"70
-[; ;application.c: 70:  while (temp1 > denominator)
-[e $U 107  ]
-[e :U 108 ]
-"71
-[; ;application.c: 71:  {
+"77
+[; ;application.c: 77:  while (temp1 > denominator)
+[e $U 102  ]
+[e :U 103 ]
+"78
+[; ;application.c: 78:  {
 {
-"72
-[; ;application.c: 72:   temp1 -= denominator;
+"79
+[; ;application.c: 79:   temp1 -= denominator;
 [e =- _temp1 _denominator ]
-"73
-[; ;application.c: 73:   cont++;
+"80
+[; ;application.c: 80:   cont++;
 [e ++ _cont -> -> 1 `i `ui ]
-"74
-[; ;application.c: 74:  }
+"81
+[; ;application.c: 81:  }
 }
-[e :U 107 ]
-"70
-[; ;application.c: 70:  while (temp1 > denominator)
-[e $ > _temp1 _denominator 108  ]
-[e :U 109 ]
-"75
-[; ;application.c: 75:  return cont;
+[e :U 102 ]
+"77
+[; ;application.c: 77:  while (temp1 > denominator)
+[e $ > _temp1 _denominator 103  ]
+[e :U 104 ]
+"82
+[; ;application.c: 82:  return cont;
 [e ) -> _cont `uc ]
-[e $UE 106  ]
-"76
-[; ;application.c: 76: }
-[e :UE 106 ]
+[e $UE 101  ]
+"83
+[; ;application.c: 83: }
+[e :UE 101 ]
 }
